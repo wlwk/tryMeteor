@@ -9,7 +9,7 @@ Template.postEdit.events({
       title: $(e.target).find('[name=title]').val()
     }
 
-    var postWithSameLink = Posts.findOne({url: postAttributes.url, _id:{"$ne":currentPostId}});
+    var postWithSameLink = Posts.findOne({url: postProperties.url, _id:{"$ne":currentPostId}});
     if (postWithSameLink) {
         alert('This link has already been posted（该链接已经存在）');
 	return;

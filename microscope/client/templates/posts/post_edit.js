@@ -11,14 +11,14 @@ Template.postEdit.events({
 
     var postWithSameLink = Posts.findOne({url: postProperties.url, _id:{"$ne":currentPostId}});
     if (postWithSameLink) {
-        alert('This link has already been posted（该链接已经存在）');
+        throwError('This link has already been posted（该链接已经存在）');
 	return;
     }
 
     Posts.update(currentPostId, {$set: postProperties}, function(error) {
       if (error) {
         // 向用户显示错误信息
-        alert(error.reason);
+        throwError(error.reason);
       } else {
         Router.go('postPage', {_id: currentPostId});
       }
