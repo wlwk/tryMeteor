@@ -20,13 +20,13 @@ Meteor.methods({
       url: String
     });
 
-    if (Meteor.isServer) {
+    /*if (Meteor.isServer) {
       postAttributes.title += "(server)";
       // wait for 5 seconds
       Meteor._sleepForMs(5000);
     } else {
       postAttributes.title += "(client)";
-    }
+    }*/
 
     var postWithSameLink = Posts.findOne({url: postAttributes.url});
     if (postWithSameLink) {
@@ -50,3 +50,14 @@ Meteor.methods({
     };
   }
 });
+validatePost = function (post) {
+  var errors = {};
+
+  if (!post.title)
+    errors.title = "请填写标题";
+
+  if (!post.url)
+    errors.url =  "请填写 URL";
+
+  return errors;
+}

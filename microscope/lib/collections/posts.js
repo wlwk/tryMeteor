@@ -28,6 +28,10 @@ Meteor.methods({
       postAttributes.title += "(client)";
     }*/
 
+    var errors = validatePost(postAttributes);
+    if (errors.title || errors.url)
+      throw new Meteor.Error('invalid-post', "你必须为你的帖子填写标题和 URL");
+
     var postWithSameLink = Posts.findOne({url: postAttributes.url});
     if (postWithSameLink) {
       return {
@@ -50,3 +54,14 @@ Meteor.methods({
     };
   }
 });
+validatePost = function (post) {
+  var errors = {};
+
+  if (!post.title)
+    errors.title = "请填写标题";
+
+  if (!post.url)
+    errors.url =  "请填写 URL";
+
+  return errors;
+}
