@@ -22,7 +22,7 @@ Template.postSubmit.events({
 
     var errors = validatePost(post);
     if (errors.title || errors.url)
-      throw new Meteor.Error('invalid-post', "你必须为你的帖子填写标题和 URL");
+      return Session.set('postSubmitErrors', errors);
 
     Meteor.call('postInsert', post, function(error, result) {
       // 向用户显示错误信息并终止
